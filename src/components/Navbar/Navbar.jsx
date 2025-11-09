@@ -19,7 +19,7 @@ const Navbar = () => {
     const handleLogout = () => {
         signOutUser()
             .then(res => {
-                toast.success('logout',res)
+                toast.success('logout', res)
             })
             .catch(error => {
                 console.log(error);
@@ -57,7 +57,9 @@ const Navbar = () => {
                                 <div className="w-10 rounded-full">
                                     <img
                                         alt="Tailwind CSS Navbar component"
-                                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                        referrerPolicy='no-referrer'
+                                        src={user?.photoURL || "https://i.ibb.co.com/NgX6sdH9/images.png"} />
+
                                 </div>
                             </div>
                             <ul
@@ -73,7 +75,7 @@ const Navbar = () => {
                                 <li onClick={handleLogout}><a>Logout</a></li>
                             </ul>
                         </div>) : (
-                            <Link to='/auth/login' className='btn'>Login</Link>
+                            <Link to='/auth/login' className='btn btn-primary rounded-full'>Login</Link>
                         )}
 
                     </div>

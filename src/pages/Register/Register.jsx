@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use } from 'react';
 import toast from 'react-hot-toast';
 import useAuth from '../../hooks/useAuth';
 import { FaGoogle } from "react-icons/fa";
@@ -6,9 +6,13 @@ import { FaGoogle } from "react-icons/fa";
 import { Link } from 'react-router';
 
 const Register = () => {
-    const { sigInWithGoolge, setUser, setLoading } = useAuth()
+    const { sigInWithGoolge,
+        setUser,
+        setLoading,
+        createUserWithEmailAndPasswordFunc,
+        updateUser,
+    } = useAuth()
     const handelLoginWithGoogle = () => {
-
         sigInWithGoolge()
             .then(res => {
                 setLoading(false)
@@ -19,6 +23,50 @@ const Register = () => {
             })
             .catch((error) => {
                 setLoading(false)
+                console.log(error);
+            })
+    }
+    const handleRegister = (e) => {
+        e.preventDefault()
+        const form = e.target
+        const name = form.name.value;
+        const photoURL = form.photo.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        const confirmPassword = form.confirm_password.value;
+        // console.log({ name, photoURL, email, password, ConfirmPassword });
+        // console.log({ password, confirmPassword });
+        const passwordUpperRegex = /[A-Z]/
+        const passwordLowerRegex = /[a-z]/
+
+        if (password.length < 6) {
+            return toast.error('Password must be at least 6 characters long')
+        }
+        else if (!passwordUpperRegex.test(password)) {
+            return toast.error(' Password must contain at least one uppercase letter.')
+        }
+        else if (!passwordLowerRegex.test(password)) {
+            return toast.error(' Password must contain at least one lowercase letter.')
+        }
+        else if (password !== confirmPassword) {
+            return toast.error('Password do not match')
+        }
+
+        createUserWithEmailAndPasswordFunc(email, password)
+            .then(res => {
+                const user = res.user;
+                console.log(user);
+                updateUser(name, photoURL)
+                    .then(res => {
+                        console.log(res.user);
+                        setUser(res.user)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+                // console.log(res);
+            })
+            .catch(error => {
                 console.log(error);
             })
 
@@ -32,7 +80,7 @@ const Register = () => {
                 <h1 className='text-center text-2xl my-10 text-gray-500'>Create an account
                 </h1>
 
-                <form className="fieldset gap-4">
+                <form onSubmit={handleRegister} className="fieldset gap-4">
                     {/* Name */}
                     <div className="" >
 
@@ -61,6 +109,7 @@ const Register = () => {
                         <label className="">Email</label>
                         <input
                             required
+                            name='email'
                             type="email"
                             className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300   border-0 focus:outline-primary "
                             placeholder="Email" />
@@ -74,6 +123,7 @@ const Register = () => {
                         </div>
                         <input
                             required
+                            name='password'
                             type="password"
                             className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300    border-0 focus:outline-primary "
                             placeholder="Password" />
@@ -89,6 +139,7 @@ const Register = () => {
                         </div>
                         <input
                             required
+                            name='confirm_password'
                             type="password"
                             className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300    border-0 focus:outline-primary "
                             placeholder="Confirm password

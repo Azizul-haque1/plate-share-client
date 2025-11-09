@@ -1,11 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
-import { FaGoogle } from 'react-icons/fa';
+import { FaEye, FaGoogle } from 'react-icons/fa';
+import { IoEye, IoEyeOff } from "react-icons/io5";
+
 
 const Login = () => {
-    const { sigInWithGoolge, setUser, setLoading } = useAuth()
+    const [show, setShow] = useState(false)
+    const { sigInWithGoolge, setUser, setLoading,
+        signWithEmailAndPasswordFunc
+    } = useAuth()
+
+    const handleLogin = (e) => {
+        e.preventDefault()
+        const form = e.target
+        const email = form.email.value;
+        const password = form.password.value;
+
+        const passwordUpperRegex = /[A-Z]/
+        const passwordLowerRegex = /[a-z]/
+
+        if (password.length < 6) {
+            return toast.error('Password must be at least 6 characters long')
+        }
+        else if (!passwordUpperRegex.test(password)) {
+            return toast.error(' Password must contain at least one uppercase letter.')
+        }
+        else if (!passwordLowerRegex.test(password)) {
+            return toast.error(' Password must contain at least one lowercase letter.')
+        }
+
+        signWithEmailAndPasswordFunc(email, password)
+            .then(res => {
+                setUser(res.user)
+                toast.success('Login successful')
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+
+    }
     const handelLoginWithGoogle = () => {
 
         sigInWithGoolge()
@@ -32,27 +69,33 @@ const Login = () => {
             <div className=" w-full  md:w-1/4 border border-transparent  md:p-10 p-2 rounded-xl md:border-gray-300 ">
                 <h1 className='text-center text-xl my-10 text-gray-500'>Welcome back! Sign in to continue</h1>
 
-                <form className="fieldset gap-4">
+                <form onSubmit={handleLogin} className="fieldset gap-4">
                     {/* email */}
                     <div className="" >
 
                         <label className="">Email</label>
                         <input
+                            name='email'
                             type="email"
                             className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300   border-0 focus:outline-primary "
                             placeholder="Email" />
                     </div>
 
-                    <div className="">
+                    <div className=" relative">
                         <div className="flex justify-between">
                             <label className="">Password</label>
-
                             <Link className='text-primary font-semibold'>Forgot password?</Link>
                         </div>
                         <input
-                            type="password"
+
+                            name='password'
+                            type={`${show ? 'text' : 'Password'}`}
                             className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300    border-0 focus:outline-primary "
                             placeholder="Password" />
+                        <span onClick={() => setShow(!show)} className=' absolute  bottom-4 x z-10 right-2'>{show ? <IoEye /> : <IoEyeOff />
+                        }
+
+                        </span>
                     </div>
                     <button className="btn btn-primary mt-4">Login</button>
                 </form>
