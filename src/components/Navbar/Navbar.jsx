@@ -41,7 +41,7 @@ const Navbar = () => {
                                 {links}
                             </ul>
                         </div>
-                        <a className="btn btn-ghost text-xl">daisyUI</a>
+                        <a className="w-1/5"> <img src="https://i.ibb.co.com/TBz8gmXL/transparent-Photoroom-1-1.png" alt="" /></a>
                     </div>
                     <div className="navbar-center hidden lg:flex">
                         <ul className="menu menu-horizontal px-1">
@@ -75,7 +75,7 @@ const Navbar = () => {
                                 <li onClick={handleLogout}><a>Logout</a></li>
                             </ul>
                         </div>) : (
-                            <Link to='/auth/login' className='btn btn-primary rounded-full'>Login</Link>
+                            <Link to='/auth/login' className='btn btn-secondary border-primary btn-outline text-primary rounded-xl'>Login</Link>
                         )}
 
                     </div>

@@ -3,11 +3,13 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
+
   --color-primary: #6c63ff;
-  --color-secondary: teal;
+  /* --color-secondary: #00bfa6; */
+  --color-secondary: #4b5563;
 }
 .navbar ul li a {
-  @apply ml-4 rounded-full;
+  @apply ml-4 rounded-full text-secondary;
 }
 .navbar .menu a.active {
   @apply text-primary bg-primary/8 duration-105 font-semibold;
