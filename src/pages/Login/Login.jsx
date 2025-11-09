@@ -1,12 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router';
 import useAuth from '../../hooks/useAuth';
+import toast from 'react-hot-toast';
+import { FaGoogle } from 'react-icons/fa';
 
 const Login = () => {
-    const authInfo = useAuth()
-
-
+    const { sigInWithGoolge, setUser, setLoading } = useAuth()
     const handelLoginWithGoogle = () => {
+
+        sigInWithGoolge()
+            .then(res => {
+                setLoading(false)
+                console.log(res.user);
+                setUser(res.user)
+                toast.success('Login successful')
+
+            })
+            .catch((error) => {
+                setLoading(false)
+                console.log(error);
+            })
+
 
     }
 
@@ -25,7 +39,7 @@ const Login = () => {
                         <label className="">Email</label>
                         <input
                             type="email"
-                            className="input w-full mt-2 bg-gray-100   border-0 focus:outline-primary "
+                            className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300   border-0 focus:outline-primary "
                             placeholder="Email" />
                     </div>
 
@@ -37,7 +51,7 @@ const Login = () => {
                         </div>
                         <input
                             type="password"
-                            className="input w-full mt-2 bg-gray-100   border-0 focus:outline-primary "
+                            className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300    border-0 focus:outline-primary "
                             placeholder="Password" />
                     </div>
                     <button className="btn btn-primary mt-4">Login</button>
@@ -45,11 +59,12 @@ const Login = () => {
                 <div className="divider text-sm text-gray-500">Or continue with
                 </div>
                 {/* Google */}
-                <button className="btn bg-white text-black w-full border-[#e5e5e5]">
-                    <svg aria-label="Google logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
+                <button onClick={handelLoginWithGoogle} className="btn bg-white text-primary  w-full   border-primary">
+                    <FaGoogle />
+
                     Login with Google
                 </button>
-                <p className='text-sm my-4 text-center text-gray-500'>Don’t have an account yet? <Link to='/register' className='text-primary font-semibold'>Sign up</Link> </p>
+                <p className='text-sm my-4 text-center text-gray-500'>Don’t have an account yet? <Link to='/auth/register' className='text-primary font-semibold'>Register</Link> </p>
 
                 {/* </div> */}
             </div >

@@ -1,18 +1,31 @@
 import React from 'react';
 import { IoMdHome } from 'react-icons/io';
 import { PiBowlFood } from 'react-icons/pi';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
+import useAuth from '../../hooks/useAuth';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
+    const { user, signOutUser } = useAuth()
     const links = <>
         <li>  <NavLink to='/'> <IoMdHome />
             Home</NavLink></li>
-        <>
-            <li>            <NavLink to='/available-foods'> <PiBowlFood />
-                Available Foods</NavLink>
-            </li>
-        </>
+
+        <li>  <NavLink to='/available-foods'> <PiBowlFood />
+            Available Foods</NavLink>
+        </li>
     </>
+
+    const handleLogout = () => {
+        signOutUser()
+            .then(res => {
+                toast.success('logout',res)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+    }
     return (
         <div>
             <div className=" bg-base-100 shadow-sm">
@@ -38,7 +51,8 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className="navbar-end">
-                        <div className="dropdown dropdown-end">
+
+                        {user ? (<div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
                                     <img
@@ -56,9 +70,12 @@ const Navbar = () => {
                                     </a>
                                 </li>
                                 <li><a>Settings</a></li>
-                                <li><a>Logout</a></li>
+                                <li onClick={handleLogout}><a>Logout</a></li>
                             </ul>
-                        </div>
+                        </div>) : (
+                            <Link to='/auth/login' className='btn'>Login</Link>
+                        )}
+
                     </div>
                 </div>
             </div>
