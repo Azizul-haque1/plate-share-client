@@ -1,15 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router';
+import useAuth from '../../hooks/useAuth';
 
 const Login = () => {
+    const authInfo = useAuth()
+
+
+    const handelLoginWithGoogle = () => {
+
+    }
+
+
     return (
-        <div className=' w-10/12 mx-auto flex items-center gap-20 justify-center h-screen border'>
-            <img className='w-1/3 ' src="https://i.ibb.co.com/BKNkW4Ct/undraw-secure-login-m11a-4.png" alt="" />
+        <div className=' px-2 md:px-0 md:w-10/12 mx-auto flex flex-col items-center md:flex-row gap-20 justify-center md:h-screen '>
+            <img className='md:w-1/3 hidden md:flex ' src="https://i.ibb.co.com/BKNkW4Ct/undraw-secure-login-m11a-4.png" alt="" />
             {/* <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl"> */}
-            <div className="w-1/4 border  p-10 rounded-xl border-gray-300 ">
+            <div className=" w-full  md:w-1/4 border border-transparent  md:p-10 p-2 rounded-xl md:border-gray-300 ">
                 <h1 className='text-center text-xl my-10 text-gray-500'>Welcome back! Sign in to continue</h1>
 
-                <fieldset className="fieldset gap-4">
+                <form className="fieldset gap-4">
                     {/* email */}
                     <div className="" >
 
@@ -32,7 +41,7 @@ const Login = () => {
                             placeholder="Password" />
                     </div>
                     <button className="btn btn-primary mt-4">Login</button>
-                </fieldset>
+                </form>
                 <div className="divider text-sm text-gray-500">Or continue with
                 </div>
                 {/* Google */}
