@@ -14,3 +14,10 @@
 .navbar .menu a.active {
   @apply text-primary bg-primary/8 duration-105 font-semibold;
 }
+
+* label {
+  @apply text-sm;
+}
+* input {
+  @apply text-sm bg-[#f9fafb] border placeholder:text-[#9ca3af] border-[#d1d5db];
+}

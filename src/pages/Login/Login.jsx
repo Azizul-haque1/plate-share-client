@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { FaEye, FaGoogle } from 'react-icons/fa';
@@ -8,6 +8,8 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 
 const Login = () => {
     const [show, setShow] = useState(false)
+    const location = useLocation()
+    const navigate = useNavigate()
     const { sigInWithGoolge, setUser, setLoading,
         signWithEmailAndPasswordFunc
     } = useAuth()
@@ -51,6 +53,8 @@ const Login = () => {
                 console.log(res.user);
                 setUser(res.user)
                 toast.success('Login successful')
+                navigate(location.state ? location.state : '/')
+
 
             })
             .catch((error) => {
