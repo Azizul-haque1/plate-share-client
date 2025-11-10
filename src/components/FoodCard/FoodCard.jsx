@@ -36,7 +36,7 @@ const FoodCard = ({ food }) => {
                 </div>
                 <p>Pickup location: <span className='font-semibold'>{pickup_location}</span> </p>
                 <div className="flex items-center justify-between gap-4">
-                    <p>{food_quantity}</p>
+                    <p>Serves <span>{food_quantity}</span> people</p>
                     <p className='text-red-500'>Expires:{expire_date}</p>
                 </div>
                 <Link to={`/foods/${_id}`} className='btn my-4 btn-outline border-primary text-primary

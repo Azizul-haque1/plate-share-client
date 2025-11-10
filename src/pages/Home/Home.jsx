@@ -7,7 +7,7 @@ const Home = () => {
     const [foods, setFoods] = useState([])
 
     useEffect(() => {
-        axiosInstance('/foods')
+        axiosInstance('/featured-foods')
             .then(data => {
                 console.log(data.data)
                 setFoods(data.data)
