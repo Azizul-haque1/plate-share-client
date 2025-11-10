@@ -66,12 +66,26 @@ const Navbar = () => {
                                 tabIndex="-1"
                                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                                 <li>
-                                    <a className="justify-between">
+                                    <Link className="justify-between">
                                         Profile
-                                        <span className="badge">New</span>
-                                    </a>
+                                    </Link>
                                 </li>
-                                <li><a>Settings</a></li>
+                                <li>
+                                    <Link to='/add-food' className="justify-between">
+                                        Add Food
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to='/manage-my-food' className="justify-between">
+                                        Manage My Food
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to='/my-food-reqest' className="justify-between">
+                                        My Food Reqest
+                                    </Link>
+                                </li>
+
                                 <li onClick={handleLogout}><a>Logout</a></li>
                             </ul>
                         </div>) : (
