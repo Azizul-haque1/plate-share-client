@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const FoodCard = ({ food }) => {
     const {
+        _id,
         food_name,
         food_image,
         food_quantity,
@@ -37,8 +39,8 @@ const FoodCard = ({ food }) => {
                     <p>{food_quantity}</p>
                     <p className='text-red-500'>Expires:{expire_date}</p>
                 </div>
-                <button className='btn my-4 btn-outline border-primary text-primary
-                '>View Details</button>
+                <Link to={`/foods/${_id}`} className='btn my-4 btn-outline border-primary text-primary
+                '>View Details</Link>
 
             </div>
         </div >

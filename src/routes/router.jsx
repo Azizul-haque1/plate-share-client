@@ -5,6 +5,7 @@ import AvailableFoods from "../pages/AvailableFoods/AvailableFoods";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import NotFound from "../pages/NotFound/NotFound";
+import FoodDetails from "../pages/FoodDetails/FoodDetails";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
             {
                 path: '/available-foods',
                 Component: AvailableFoods
+            },
+            {
+                path: '/foods/:id',
+                Component: FoodDetails
             },
             {
                 path: '/auth/login',
