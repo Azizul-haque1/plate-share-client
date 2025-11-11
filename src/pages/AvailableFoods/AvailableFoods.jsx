@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import userAxios from '../../hooks/userAxios';
+import useAxios from '../../hooks/userAxios';
 import FoodCard from '../../components/FoodCard/FoodCard';
-import { data } from 'react-router';
 
 const AvailableFoods = () => {
-    const axiosInstance = userAxios()
+    const axiosInstance = useAxios()
     const [foods, setFoods] = useState([])
 
     useEffect(() => {
