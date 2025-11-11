@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useAxios from '../../hooks/userAxios';
 import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const ManageMyFood = () => {
     const { user } = useAuth()
     const axiosInstance = useAxios()
+    const [refatch, setRefatch] = useState(false)
     const [foods, setFoods] = useState([])
     const [foodId, setFoodId] = useState(null)
     const [foodData, setFoodData] = useState({})
+
     const {
         food_name,
         food_image,
@@ -19,11 +22,23 @@ const ManageMyFood = () => {
 
     const modalRef = useRef()
 
-    const hanldeModal = (_id) => {
+    useEffect(() => {
+        axiosInstance(`/my-food?email=${user.email}`)
+            .then(result => {
+                const data = result.data
+                console.log(data);
+                setFoods(data)
+                setRefatch(false)
+            })
+    }, [axiosInstance, user, refatch])
+
+    const handleOpenModal = (_id) => {
         setFoodId(_id)
         modalRef.current.showModal()
 
     }
+
+
 
 
     useEffect(() => {
@@ -34,8 +49,6 @@ const ManageMyFood = () => {
                 setFoodData(data)
             })
     }, [axiosInstance, foodId,])
-
-
 
     const handleUpdate = (e,) => {
         e.preventDefault()
@@ -66,33 +79,59 @@ const ManageMyFood = () => {
 
     }
 
+    const handleDelete = (id) => {
 
-    useEffect(() => {
-        axiosInstance(`/my-food?email=${user.email}`)
-            .then(result => {
-                const data = result.data
-                console.log(data);
-                setFoods(data)
-            })
-    }, [axiosInstance, user])
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosInstance.delete(`/foods/${id}`)
+                    .then(result => {
+                        const data = result.data
+                        if (data.deletedCount > 0) {
+                            console.log(result.data);
+                            setRefatch(true)
+                        }
+                    })
+
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
+
+
+
+    }
+
+
+
+
+
     return (
-        <div className='w-10/12 mx-auto mt-10'>
+        <div className=' w-full md:w-10/12 mx-auto mt-10 mb-10'>
             <h1 className='text-center text-4xl font-bold text-secondary mb-10'>My Donated Food
             </h1>
 
-            <div className="overflow-x-auto">
-                <table className="table">
+            <div className="overflow-x-auto w-full ">
+                <table className="w-full  table-zebra table-xs md:table">
                     {/* head */}
                     <thead className=' text-secondary font-extrabold'>
                         <tr className=''>
-                            <th className=''>
-                                SI
-                            </th>
-                            <th>Image</th>
-                            <th>Food Name</th>
-                            <th>Status</th>
-                            <th >Actions</th>
-
+                            <th className="w-1/12">SI</th>
+                            <th className="w-2/12">Image</th>
+                            <th className="w-4/12">Food Name</th>
+                            <th className="w-2/12">Status</th>
+                            <th className="w-2/12">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -102,7 +141,7 @@ const ManageMyFood = () => {
                                 <th>
                                     {index + 1}
                                 </th>
-                                <td>
+                                <td className=''>
                                     <div className="flex items-center gap-3">
                                         <div className="avatar">
                                             <div className="mask mask-squircle h-12 w-12">
@@ -115,7 +154,7 @@ const ManageMyFood = () => {
                                     </div>
                                 </td>
                                 <td>  <div>
-                                    <div className="font-bold">{food.food_name}</div>
+                                    <div className="font-bold text-xs md:text-sm">{food.food_name}</div>
                                     {/* <div className="text-sm opacity-50">United States</div> */}
                                 </div></td>
                                 <td className=''>
@@ -124,8 +163,8 @@ const ManageMyFood = () => {
                                 </td>
                                 <th>
                                     <div className="md:flex w-full  gap-4">
-                                        <button onClick={() => hanldeModal(food._id)} className='btn w-full  md:w-20 mb-2 md:mb-0   btn-outline rounded-sm text-primary'>Edit</button>
-                                        <button className='btn   btn-outline rounded-sm text-red-500
+                                        <button onClick={() => handleOpenModal(food._id)} className='btn w-full  md:w-20 mb-2 md:mb-0   btn-outline rounded-sm text-primary'>Edit</button>
+                                        <button onClick={() => handleDelete(food._id)} className='btn w-full md:max-w-fit   btn-outline rounded-sm text-red-500
                                     '>Delete</button>
                                     </div>
                                 </th>

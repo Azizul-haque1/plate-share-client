@@ -54,7 +54,7 @@ const AddFood = () => {
     return (
         <div className=' px-2  md:px-0 md:w-10/12 mx-auto flex flex-col items-center md:flex-row gap-20 justify-center h-fu md:h-screen '>
             <div className="  w-full shadow-2xl  md:w-1/2 lg:1/3 border border-transparent  md:p-10 p-2 rounded-xl md:border-gray-300 ">
-                <h1 className='text-center text-2xl my-10 text-gray-500'>Create an account
+                <h1 className='text-center text-2xl my-10 text-gray-500'>Add Food
                 </h1>
 
                 <form onSubmit={handleAddFood} className="fieldset gap-4">
