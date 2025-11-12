@@ -3,13 +3,14 @@ import { PiXLogoFill } from 'react-icons/pi';
 import { RxGithubLogo } from "react-icons/rx";
 import { TiSocialFacebookCircular } from "react-icons/ti";
 import { FaFacebook } from "react-icons/fa";
+import { Link } from 'react-router';
 
 
 
 const Footer = () => {
     return (
-        <div className="">
-            <div className="grid  grid-cols-1 gap-8 px-14 lg:px-4 lg:py-8 lg:grid-cols-4 py-20 bg-gray-100        ">
+        <div className="bg-gray-100 ">
+            <div className="grid  grid-cols-1 gap-8 px-14 lg:px-4 lg:py-8 lg:grid-cols-4 py-20        ">
                 <div className=" flex-col flex mb-2  md:mb-0 md:items-center ">
                     <img
                         className='w-1/4 mt-4 md:mt-0 mb-4'
@@ -63,22 +64,32 @@ const Footer = () => {
                     <h3 className='text-secondary font-bold uppercase'>Quick Links
                     </h3>
                     <ul className=' mt-6 text-secondary/80 font-normal '>
-                        <li className='mb-4'><a className='hover:underline' href="">About us</a></li>
-                        <li className='mb-4'><a className='hover:underline' href="">Privacy Policy</a></li>
-                        <li className='mb-4'><a className='hover:underline' href="">Term and Conditions</a></li>
-                        <li className='mb-4'><a className='hover:underline' href="">Contact Us</a></li>
+                        <li className='mb-4'><Link className='hover:underline' to='/available-foods'>Available Foods</Link></li>
+                        <li className='mb-4'><Link className='hover:underline' to='/add-food'>Add Food</Link></li>
+                        <li className='mb-4'><Link className='hover:underline' to='/manage-my-food'>Manage My Food</Link></li>
+                        <li className='mb-4'><Link className='hover:underline' to='/my-food-reqest'>My Food Reqest</Link></li>
+
+
                     </ul>
                 </div>
                 <div className="">
-                    <h3 className='text-secondary font-bold uppercase'>Informations
+                    <h3 className='text-secondary font-bold uppercase'>Contact info
+
                     </h3>
                     <ul className=' mt-6 text-secondary/80 font-normal '>
-                        <li className='mb-4'><a className='hover:underline' href="">About us</a></li>
-                        <li className='mb-4'><a className='hover:underline' href="">Privacy Policy</a></li>
-                        <li className='mb-4'><a className='hover:underline' href="">Term and Conditions</a></li>
-                        <li className='mb-4'><a className='hover:underline' href="">Contact Us</a></li>
+                        <li className='mb-4'><a className='hover:underline' href="#">Address : London Eye, London, United Kingdom
+
+                        </a></li>
+
+                        <li className='mb-4'><a className='hover:underline' href="#">Email : info@plateShare.com</a></li>
+                        <li className='mb-4'><a className='hover:underline' href="#">Contact Us</a></li>
                     </ul>
                 </div>
+            </div>
+
+
+            <div className="text-center py-4 border-t text-secondary border-gray-300">
+                <p>© 2025 PlateShare. All rights reserved.</p>
             </div>
         </div>
     );

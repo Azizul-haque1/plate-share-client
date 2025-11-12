@@ -1,17 +1,31 @@
-import React, { use } from 'react';
+import React, { use, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import useAuth from '../../hooks/useAuth';
 import { FaGoogle } from "react-icons/fa";
 
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 
 const Register = () => {
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    const { user } = useAuth()
+
     const { sigInWithGoolge,
         setUser,
         setLoading,
         createUserWithEmailAndPasswordFunc,
         updateUser,
     } = useAuth()
+
+
+    useEffect(() => {
+        if (user) {
+            navigate(location.state ? location.state : '/')
+
+        }
+    }, [user, navigate, location])
+
     const handelLoginWithGoogle = () => {
         sigInWithGoolge()
             .then(res => {
@@ -19,6 +33,8 @@ const Register = () => {
                 console.log(res.user);
                 setUser(res.user)
                 toast.success('Login successful')
+                navigate(location.state ? location.state : '/')
+
 
             })
             .catch((error) => {

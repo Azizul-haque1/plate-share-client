@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
@@ -10,9 +10,19 @@ const Login = () => {
     const [show, setShow] = useState(false)
     const location = useLocation()
     const navigate = useNavigate()
-    const { sigInWithGoolge, setUser, setLoading,
+    const { sigInWithGoolge, setUser, user, setLoading,
         signWithEmailAndPasswordFunc
     } = useAuth()
+
+
+    useEffect(() => {
+        if (user) {
+            navigate(location.state ? location.state : '/')
+
+        }
+    }, [user,navigate,location])
+
+
 
     const handleLogin = (e) => {
         e.preventDefault()

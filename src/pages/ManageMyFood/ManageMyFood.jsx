@@ -50,7 +50,7 @@ const ManageMyFood = () => {
             })
     }, [axiosInstance, foodId,])
 
-    const handleUpdate = (e,) => {
+    const handleUpdate = (e) => {
         e.preventDefault()
         const form = e.target;
         const foodName = form.food_name.value;
@@ -59,7 +59,6 @@ const ManageMyFood = () => {
         const foodQuantity = form.food_quantity.value;
         const expireDate = form.expire_date.value;
         const additionalNotes = form.additional_notes.value;
-        console.log({ foodName, foodImge, pickupLocation, foodQuantity, expireDate, additionalNotes });
 
         const updateFood = {
             food_name: foodName,
@@ -72,7 +71,21 @@ const ManageMyFood = () => {
 
         axiosInstance.patch(`/foods/${foodId}`, updateFood)
             .then(result => {
-                console.log(result);
+                // console.log(result);
+
+                const data = result.data
+
+                if (data.modifiedCount) {
+                    modalRef.current.close()
+
+                    Swal.fire({
+                        title: "Food update successfully!",
+                        icon: "success",
+                        draggable: true
+                    });
+
+                    setRefatch(true)
+                }
             })
 
 
@@ -103,7 +116,7 @@ const ManageMyFood = () => {
 
                 Swal.fire({
                     title: "Deleted!",
-                    text: "Your file has been deleted.",
+                    text: "Your food has been deleted.",
                     icon: "success"
                 });
             }
@@ -164,7 +177,7 @@ const ManageMyFood = () => {
                                 <th>
                                     <div className="md:flex w-full  gap-4">
                                         <button onClick={() => handleOpenModal(food._id)} className='btn w-full  md:w-20 mb-2 md:mb-0   btn-outline rounded-sm text-primary'>Edit</button>
-                                        <button onClick={() => handleDelete(food._id)} className='btn w-full md:max-w-fit   btn-outline rounded-sm text-red-500
+                                        <button onClick={() => handleDelete(food._id)} className='btn w-full md:max-w-fit   btn-outline rounded-sm text-red-700
                                     '>Delete</button>
                                     </div>
                                 </th>
@@ -269,7 +282,6 @@ const ManageMyFood = () => {
 
                         <button className="btn btn-primary mt-4">Update Now</button>
                     </form>
-
                 </div>
             </dialog>
         </div>
