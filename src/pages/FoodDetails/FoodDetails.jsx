@@ -11,7 +11,10 @@ const FoodDetails = () => {
     const axiosInstance = useAxios()
     const { user } = useAuth()
     const [loading, setLoading] = useState(true)
+    const [refatch, setRefatch] = useState(false)
     const [foodData, setFoodData] = useState({})
+    const [foods, setFoods] = useState([])
+    const [refatchTable, setRefatchTable] = useState(false)
     const { id } = useParams()
     const modalRef = useRef()
 
@@ -32,18 +35,34 @@ const FoodDetails = () => {
 
 
     useEffect(() => {
-
         axiosInstance.get(`/foods/${id}`)
             .then(result => {
                 // console.log(result);
                 const data = result.data;
-                setFoodData(data)
                 setLoading(false)
+                setFoodData(data)
             })
             .catch(error => {
                 console.log(error);
             })
-    }, [axiosInstance, id])
+    }, [axiosInstance, id, refatch])
+
+
+
+
+    useEffect(() => {
+        axiosInstance(`/food-request/${id}`)
+            .then(res => {
+                setLoading(false)
+                setFoods(res.data)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+
+    }, [id, axiosInstance, refatchTable])
+
 
     const handleOpenModal = () => {
         modalRef.current.showModal()
@@ -74,12 +93,46 @@ const FoodDetails = () => {
                 const data = result.data
                 if (data.insertedId)
                     toast.success('Food Request Successfull')
+                e.target.reset()
+                modalRef.current.close()
+                setRefatchTable(prev => !prev)
+
 
             })
 
     }
 
-    loading && <Loader />
+
+    const handleAccept = (_id) => {
+        const accepted = { status: "Accepted" }
+        axiosInstance.patch(`/food-request/${_id}`, accepted)
+            .then(result => {
+                const data = result.data;
+                console.log('data.......', data);
+                toast.success('Request Accepted')
+                setRefatchTable(prev => !prev)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    const handleReject = (_id) => {
+        const rejected = { status: "Rejected" }
+        axiosInstance.patch(`/food-request/${_id}`, rejected)
+            .then(result => {
+                const data = result.data;
+                console.log('data.......', data);
+                toast.success('Request Rejected')
+                setRefatchTable(prev => !prev)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+
+    if (loading) return <Loader />
     return (
 
         <div className="">
@@ -131,9 +184,9 @@ const FoodDetails = () => {
 
                 <dialog ref={modalRef} className="modal">
                     <div className="modal-box">
-                        <form method="dialog">
+                        <form >
                             {/* if there is a button in form, it will close the modal */}
-                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                            <button type='button' onClick={() => modalRef.current.close()} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                         </form>
                         <h1 className='text-3xl text-center  mb-10 mt-3 text-secondary font-bold'>Update Food</h1>
                         <form
@@ -184,7 +237,7 @@ const FoodDetails = () => {
                             </div>
 
 
-                            <button className="btn btn-primary mt-4">Submit Request</button>
+                            <button type='submit' className="btn btn-primary mt-4">Submit Request</button>
                         </form>
                     </div>
                 </dialog>
@@ -192,10 +245,87 @@ const FoodDetails = () => {
             {
 
                 user.email === donator_email ?
-                    <RequestFood /> : ''
+                    (
+                        <div className="w-full md:w-10/12 mx-auto mt-10 mb-10">
+                            <h1 className="text-center text-4xl font-bold text-secondary mb-10">
+                                All requested this food
+                            </h1>
+
+                            <div className="overflow-x-auto w-full">
+                                <table className="w-full table-zebra table-xs md:table">
+                                    <thead className="text-secondary font-extrabold">
+                                        <tr>
+                                            <th className="w-1/12">SI</th>
+                                            <th className="w-2/12">Name</th>
+                                            <th className="w-4/12">Contact</th>
+                                            <th className="w-2/12">Status</th>
+                                            <th className="w-2/12">Actions</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {
+
+                                            foods.map((reqeuseFood, index) => <tr>
+                                                <th>{index + 1}</th>
+                                                <td>
+                                                    {/* Name and phto */}
+                                                    <div>
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="avatar">
+                                                                <div className="mask mask-squircle h-12 w-12">
+                                                                    <img
+                                                                        src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                                                                        alt="Avatar Tailwind CSS Component" />
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div className="font-bold">{reqeuseFood.name}</div>
+                                                                <div className="text-sm opacity-50">{reqeuseFood.userEmail}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <td>
+                                                        Location : {reqeuseFood.write_location}
+                                                        <br />
+                                                        <span className="">{reqeuseFood.contactNo}</span>
+                                                    </td>
+                                                </td>
+                                                <td>
+                                                    <p className="badge badge-warning text-white">
+                                                        {reqeuseFood.status}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <div className="md:flex w-full gap-4">
+                                                        <button onClick={() => handleAccept(reqeuseFood._id)}
+                                                            disabled={reqeuseFood.status === 'Accepted' || reqeuseFood.status === 'Rejected'}
+
+                                                            className="btn w-full md:w-20 mb-2 md:mb-0 btn-outline rounded-sm text-green-500">
+                                                            {reqeuseFood.status === 'Accepted' ? "Accepted" : 'Accept'}
+                                                        </button>
+                                                        <button onClick={() => handleReject(reqeuseFood._id)}
+                                                            disabled={reqeuseFood.status === 'Accepted' || reqeuseFood.status === 'Rejected'}
+                                                            className="btn w-full md:max-w-fit btn-outline rounded-sm text-red-700">
+                                                            {reqeuseFood.status === 'Rejected' ? "Rejected" : 'Reject'}
+
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>)
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    ) : ('')
             }
 
-        </div>
+        </div >
     );
 };
 export default FoodDetails;

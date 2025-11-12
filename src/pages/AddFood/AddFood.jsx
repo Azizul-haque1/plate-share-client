@@ -40,6 +40,7 @@ const AddFood = () => {
 
                 if (data.insertedId) {
                     toast.success('added food')
+                    e.target.reset()
 
                 }
             })
