@@ -4,7 +4,6 @@ import { useParams } from 'react-router';
 import Loader from '../../components/Loader/Loader';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
-import RequestFood from '../../components/RequestFood/RequestFood';
 
 
 const FoodDetails = () => {

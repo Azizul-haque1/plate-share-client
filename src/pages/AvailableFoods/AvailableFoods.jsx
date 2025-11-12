@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useAxios from '../../hooks/userAxios';
 import FoodCard from '../../components/FoodCard/FoodCard';
 import Loader from '../../components/Loader/Loader';
-
+import { motion } from 'framer-motion';
 const AvailableFoods = () => {
     const axiosInstance = useAxios()
     const [foods, setFoods] = useState([])
@@ -28,7 +28,14 @@ const AvailableFoods = () => {
     }
 
     return (
-        <div className='w-10/12 mx-auto mb-20'>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+
+
+            className='w-10/12 mx-auto mb-20'>
             <h1 className='text-4xl text-secondary font-bold text-center mt-10 mb-2'>Available <span className='text-primary'>Foods</span></h1>
             <p className='text-center text-secondary/80'>Browse freshly shared meals from our community</p>
 
@@ -43,7 +50,7 @@ const AvailableFoods = () => {
 
             </div>
 
-        </div>
+        </motion.div>
     );
 };
 
