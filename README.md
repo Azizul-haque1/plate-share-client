@@ -1,16 +1,60 @@
-# React + Vite
+# 🍽️ PlateShare — Community Food Sharing Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 🌐 Live Site: [https://plate-share1.netlify.app]
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧩 Overview
 
-## React Compiler
+**PlateShare** is a community-driven food-sharing platform built using the **MERN stack**.  
+It allows users to share their surplus food with the community, helping reduce food waste while supporting those in need.  
+Users can post available food items, browse donations, and request food — all within an intuitive and modern web interface.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ✨ Key Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🥗 **Share Surplus Food Easily**  
+  Logged-in users can donate food by filling out a simple form with details such as food name, quantity, pickup location, and expiry date. Images are hosted using **imgbb** for reliability.
+
+- 🔐 **Secure Authentication**  
+  Integrated **Firebase Authentication** (Email/Password + Google Login). Private routes are protected, and users stay logged in even after refreshing the page.
+
+- 📦 **Full CRUD Functionality**  
+  Donators can **add**, **update**, and **delete** their food posts, while the public can browse all available foods and view details dynamically from the MongoDB database.
+
+- 🤝 **Food Request & Donation System**  
+  Users can request available food, and donators can **accept** or **reject** requests. Accepted requests automatically change the food status to **“Donated”**.
+
+- 🎨 **Modern, Responsive UI with Animations**  
+  Built with **Tailwind CSS** and enhanced by **Framer Motion** animations for a smooth user experience across all devices — mobile, tablet, and desktop.
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend:**
+
+- React.js
+- React Router DOM
+- Tailwind CSS
+- Framer Motion
+- SweetAlert2 for interactive alerts
+
+**Backend:**
+
+- Node.js
+- Express.js
+- MongoDB
+
+## ⚙️ Core Functionalities
+
+- 🔑 Firebase Authentication (Email/Password & Google Login)
+- 🔒 Protected Routes for logged-in users
+- 🥘 Food Management (Add / Update / Delete / Read)
+- 📊 Dynamic Featured Foods section on Home Page
+- 📬 Food Request System with Donator approval
+- 🔁 Persistent Login Session
+- ⚡ Loading spinner and error handling
+- 🚫 Custom 404 Not Found Page
+- 🧭 Fully Responsive Layout with Navbar & Footer
