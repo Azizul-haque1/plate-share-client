@@ -67,7 +67,7 @@ const Footer = () => {
                         <li className='mb-4'><Link className='hover:underline' to='/available-foods'>Available Foods</Link></li>
                         <li className='mb-4'><Link className='hover:underline' to='/add-food'>Add Food</Link></li>
                         <li className='mb-4'><Link className='hover:underline' to='/manage-my-food'>Manage My Food</Link></li>
-                        <li className='mb-4'><Link className='hover:underline' to='/my-food-reqest'>My Food Reqest</Link></li>
+                        <li className='mb-4'><Link className='hover:underline' to='/my-food-request'>My Food Request</Link></li>
 
 
                     </ul>

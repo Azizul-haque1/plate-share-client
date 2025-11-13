@@ -19,10 +19,16 @@ const FoodCard = ({ food }) => {
     return (
 
         <div className='  shadow-xl  rounded-xl space-y-5' >
-            <div className="image w-full overflow-hidden  relative ">
+            <div className="image w-full overflow-hidden h-[250px]  relative ">
                 <img
-                    className='hover:scale-110 w-full transition-transform object-cover  rounded-xl overflow-hidden'
-                    src='https://i.ibb.co.com/LDTBH1Z0/fried-salmon-steak-cooked-green-600nw-2489026949.webp' alt="" />
+                    className='hover:scale-110 w-full  transition-transform object-cover  rounded-xl overflow-hidden'
+
+
+                    src={food_image
+                    }
+                    // 
+
+                    alt="" />
                 <p className='badge text-green-500 absolute top-4 right-4'>{food_status}</p>
             </div>
 

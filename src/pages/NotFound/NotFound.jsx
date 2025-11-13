@@ -11,7 +11,7 @@ const NotFound = () => {
             {/* */}
             <div className="bg-[#F3F3F3] ">
                 <div style={{ backgroundImage: 'url' }}
-                    className={` w-10/12 mx-auto flex items-center justify-around h-screen`}>
+                    className={` w-10/12 mx-auto flex flex-col-reverse md:flex-row items-center justify-around h-screen`}>
                     <div className=" space-y-5">
                         <h2 className='text-5xl font-bold'>Ooops...</h2>
                         <h3 className='text-5xl text-gray-500'>Page not found</h3>

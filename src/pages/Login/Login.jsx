@@ -20,7 +20,7 @@ const Login = () => {
             navigate(location.state ? location.state : '/')
 
         }
-    }, [user,navigate,location])
+    }, [user, navigate, location])
 
 
 
@@ -77,10 +77,14 @@ const Login = () => {
 
 
     return (
-        <div className=' px-2 md:px-0 md:w-10/12 mx-auto flex flex-col items-center md:flex-row gap-20 justify-center md:h-screen '>
-            <img className='md:w-1/3 hidden md:flex ' src="https://i.ibb.co.com/BKNkW4Ct/undraw-secure-login-m11a-4.png" alt="" />
-            {/* <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl"> */}
-            <div className=" shadow-xl  w-full  md:w-1/4 border border-transparent  md:p-10 p-2 rounded-xl md:border-gray-300 ">
+        <div className=' px-2 md:px-0 md:w-10/12 mx-auto flex flex-col items-center md:flex-row gap-20 justify-center pt-20 pb-40 md:py-20 '>
+            <div 
+            
+            className="md:w-1/4 hidden md:flex ">
+                <img className='' src="https://i.ibb.co.com/vxLJJKZ6/Illustration.png" alt="" />
+
+            </div>            {/* <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl"> */}
+            <div className=" shadow-xl   w-full  md:w-1/2 lg:w-1/3 border border-secondary/40  md:p-10 p-2 rounded-xl md:border-gray-300 ">
                 <h1 className='text-center text-xl my-10 text-gray-500'>Welcome back! Sign in to continue</h1>
 
                 <form onSubmit={handleLogin} className="fieldset gap-4">

@@ -41,16 +41,31 @@ const Home = () => {
                 {/* // src="https://i.ibb.co.com/8nZKs2sc/istockphoto-1457889029-612x612.jpg" alt="" /> */}
 
                 <motion.div
-                    initial={{ opacity: 0, x: -300 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, x: -300, }}
+                    animate={{ opacity: 1, x: 0, }}
                     exit={{ opacity: 0, y: -100 }}
                     transition={{ ease: 'easeOut', duration: 1 }}
 
-                    className='text-left space-y-5 absolute top-1/2  w-6/12 mx-auto  text-white text-xl z-10 py-5 px-20 transform    '>
-                    <p className='text-2xl'>We have food ands </p>
+                    className='text-left space-y-5 absolute top-1/3 w-fu  translate-x-3 translate-y-3 md:w-6/12 mx-auto  text-white text-xl z-10 py-5 md:px-20 transform    '>
+                    <p
 
-                    <h2 className='text-6xl'>we’re ready to help!</h2>
-                    <p className='text-2xl'>If you, or anyone you know, needs assistance with food through these challenging times, we’re here to help</p>
+
+                        className=' text-xl md:text-2xl'>We have food ands </p>
+
+                    <h2
+
+
+                        className=' text-3xl md:text-6xl'>we’re ready to help!
+
+
+                    </h2>
+                    <p
+
+
+                        className='text-xl md:text-2xl'>If you, or anyone you know, needs assistance with food through these challenging times, we’re here to help</p>
+
+
+
                     <Link to='/available-foods' className='btn'>View All Foods</Link>
                 </motion.div>
             </div>

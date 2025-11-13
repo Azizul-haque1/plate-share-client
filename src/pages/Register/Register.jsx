@@ -89,10 +89,10 @@ const Register = () => {
 
     }
     return (
-        <div className=' px-2  md:px-0 md:w-10/12 mx-auto flex flex-col items-center md:flex-row gap-20 justify-center md:h-screen '>
+        <div className=' px-2  md:px-0 md:w-10/12 mx-auto flex flex-col items-center md:flex-row gap-20 justify-center py-20 '>
             {/* <img className='md:w-1/3 hidden md:flex ' src="https://i.ibb.co.com/BKNkW4Ct/undraw-secure-login-m11a-4.png" alt="" /> */}
 
-            <div className=" w-full shadow-2xl  md:w-1/3 border border-transparent  md:p-10 p-2 rounded-xl md:border-gray-300 ">
+            <div className=" w-full px-3 shadow-2xl  md:w-7/12  lg:w-6/12  border border-transparent  md:p-10 rounded-xl md:border-gray-300 ">
                 <h1 className='text-center text-2xl my-10 text-gray-500'>Create an account
                 </h1>
 

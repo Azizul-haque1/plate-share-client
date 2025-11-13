@@ -52,6 +52,7 @@ const Navbar = () => {
                     </div>
                     <div className="navbar-end">
 
+
                         {user ? (<div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
@@ -66,7 +67,7 @@ const Navbar = () => {
                                 tabIndex="-1"
                                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                                 <li>
-                                    <Link className="justify-between">
+                                    <Link to='/my-profile' className="justify-between">
                                         Profile
                                     </Link>
                                 </li>
@@ -81,8 +82,8 @@ const Navbar = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/my-food-reqest' className="justify-between">
-                                        My Food Reqest
+                                    <Link to='/my-food-request' className="justify-between">
+                                        My Food Request
                                     </Link>
                                 </li>
 

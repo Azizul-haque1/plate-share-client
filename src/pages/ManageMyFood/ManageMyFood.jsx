@@ -18,6 +18,7 @@ const ManageMyFood = () => {
         pickup_location,
         expire_date,
         additional_notes,
+
     } = foodData
 
     const modalRef = useRef()
