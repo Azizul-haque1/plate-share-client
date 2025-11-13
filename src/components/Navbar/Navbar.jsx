@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdHome } from 'react-icons/io';
 import { PiBowlFood } from 'react-icons/pi';
 import { Link, NavLink } from 'react-router';
@@ -7,6 +7,21 @@ import toast from 'react-hot-toast';
 
 const Navbar = () => {
     const { user, signOutUser } = useAuth()
+
+    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+
+    useEffect(() => {
+        const html = document.querySelector("html");
+        html.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+
+    const handleTheme = (checked) => {
+        setTheme(checked ? "dark" : "light");
+    };
+
     const links = <>
         <li>  <NavLink to='/'> <IoMdHome />
             Home</NavLink></li>
@@ -51,7 +66,11 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className="navbar-end">
-
+                        <input
+                            onChange={(e) => handleTheme(e.target.checked)}
+                            type="checkbox"
+                            defaultChecked={localStorage.getItem('theme') === "dark"}
+                            className="toggle mr-10" />
 
                         {user ? (<div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">

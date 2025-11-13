@@ -12,8 +12,11 @@
   /* default: true; */
   --color-primary: #f44c26;
   /* --color-secondary: #00bfa6; */
-  --color-secondary: #6EACDA;
+  --color-secondary: #6eacda;
 }
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 .navbar ul li a {
   @apply ml-4 rounded-full text-secondary;
 }

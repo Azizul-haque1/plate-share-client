@@ -9,7 +9,7 @@ import { Link } from 'react-router';
 
 const Footer = () => {
     return (
-        <div className="bg-gray-100 ">
+        <div className="bg-gray-100  dark:bg-black ">
             <div className="grid  grid-cols-1 gap-8 px-14 lg:px-4 lg:py-8 lg:grid-cols-4 py-20        ">
                 <div className=" flex-col flex mb-2  md:mb-0 md:items-center ">
                     <img
@@ -88,7 +88,7 @@ const Footer = () => {
             </div>
 
 
-            <div className="text-center py-4 border-t text-secondary border-gray-300">
+            <div className="text-center py-4 border-t text-secondary border-gray-200">
                 <p>© 2025 PlateShare. All rights reserved.</p>
             </div>
         </div>

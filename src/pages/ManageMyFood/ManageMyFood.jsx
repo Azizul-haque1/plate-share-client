@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import useAxios from '../../hooks/userAxios';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import Loader from '../../components/Loader/Loader';
 
 const ManageMyFood = () => {
     const { user } = useAuth()
@@ -10,6 +11,8 @@ const ManageMyFood = () => {
     const [foods, setFoods] = useState([])
     const [foodId, setFoodId] = useState(null)
     const [foodData, setFoodData] = useState({})
+    const [loading, setLoading] = useState(true)
+
 
     const {
         food_name,
@@ -26,6 +29,7 @@ const ManageMyFood = () => {
     useEffect(() => {
         axiosInstance(`/my-food?email=${user.email}`)
             .then(result => {
+                setLoading(false)
                 const data = result.data
                 console.log(data);
                 setFoods(data)
@@ -45,7 +49,8 @@ const ManageMyFood = () => {
     useEffect(() => {
         if (!foodId) return;
         axiosInstance(`/foods/${foodId}`)
-            .then(result => {
+        setLoading(false)
+        .then(result => {
                 const data = result.data
                 setFoodData(data)
             })
@@ -74,8 +79,8 @@ const ManageMyFood = () => {
             .then(result => {
                 // console.log(result);
 
+                setLoading(false)
                 const data = result.data
-
                 if (data.modifiedCount) {
                     modalRef.current.close()
 
@@ -127,6 +132,8 @@ const ManageMyFood = () => {
 
     }
 
+
+    if (loading) return <Loader />
 
 
 

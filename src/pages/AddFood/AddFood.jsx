@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import useAxios from '../../hooks/userAxios';
 import toast from 'react-hot-toast';
+import Loader from '../../components/Loader/Loader';
 
 
 const AddFood = () => {
@@ -42,13 +43,9 @@ const AddFood = () => {
                     toast.success('added food')
                     e.target.reset()
 
+
                 }
             })
-
-
-
-
-
 
 
     }
@@ -114,7 +111,7 @@ const AddFood = () => {
                                 required
                                 type='date'
                                 name='expire_date'
-                                className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300   border-0 focus:outline-primary "
+                                className="input w-full mt-2 dark:bg- bg-gray-100 dark:text-black   border-0 focus:outline-primary "
                                 placeholder="Expire Date
 " />
                         </div>
@@ -125,7 +122,7 @@ const AddFood = () => {
                         </label>
                         <textarea
                             name='additional_notes'
-                            className="textarea mt-2 w-full" placeholder="Bio"></textarea>
+                            className="textarea mt-2 w-full  bg-gray-100  dark:text-black" placeholder="Bio"></textarea>
 
                     </div>
 

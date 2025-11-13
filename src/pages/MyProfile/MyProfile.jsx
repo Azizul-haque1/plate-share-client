@@ -1,7 +1,22 @@
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
+import toast from 'react-hot-toast';
 
 const MyProfile = () => {
+    const { signOutUser } = useAuth()
+
+
+
+    const handleLogout = () => {
+        signOutUser()
+            .then(res => {
+                toast.success('logout', res)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+    }
     const { user } = useAuth()
     return (
         <div className='w-10/12 mx-auto my-20'>
@@ -24,7 +39,7 @@ const MyProfile = () => {
                 </div>
 
                 <div className="text-center">
-                    <button className="btn btn-primary">Log out</button>
+                    <button onClick={handleLogout} className="btn btn-primary">Log out</button>
 
                 </div>
 

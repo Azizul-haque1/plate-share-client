@@ -9,6 +9,7 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 const Login = () => {
     const [show, setShow] = useState(false)
     const location = useLocation()
+    
     const navigate = useNavigate()
     const { sigInWithGoolge, setUser, user, setLoading,
         signWithEmailAndPasswordFunc
@@ -45,12 +46,15 @@ const Login = () => {
 
         signWithEmailAndPasswordFunc(email, password)
             .then(res => {
+                setLoading(false)
                 setUser(res.user)
                 toast.success('Login successful')
 
             })
             .catch(error => {
                 console.log(error);
+                showErrorToast(error.code);
+
             })
 
 
@@ -69,18 +73,54 @@ const Login = () => {
             })
             .catch((error) => {
                 setLoading(false)
+                toast.error(error)
                 console.log(error);
             })
 
 
     }
 
+    const showErrorToast = (code) => {
+        switch (code) {
+            case "auth/invalid-email":
+                toast.error("Invalid email address.");
+                break;
+            case "auth/user-disabled":
+                toast.error("This account has been disabled.");
+                break;
+            case "auth/user-not-found":
+                toast.error("No account found with this email.");
+                break;
+            case "auth/wrong-password":
+                toast.error("Incorrect password.");
+                break;
+            case "auth/too-many-requests":
+                toast.error("Too many failed attempts. Try again later.");
+                break;
+            case "auth/network-request-failed":
+                toast.error("Network error. Check your connection.");
+                break;
+            case "auth/invalid-credential":
+                toast.error("Invalid login credentials.");
+                break;
+            case "auth/operation-not-allowed":
+                toast.error("Email/password login not enabled.");
+                break;
+            case "auth/internal-error":
+                toast.error("Internal error. Try again later.");
+                break;
+            default:
+                toast.error("Something went wrong. Please try again.");
+        }
+
+    };
+
 
     return (
         <div className=' px-2 md:px-0 md:w-10/12 mx-auto flex flex-col items-center md:flex-row gap-20 justify-center pt-20 pb-40 md:py-20 '>
-            <div 
-            
-            className="md:w-1/4 hidden md:flex ">
+            <div
+
+                className="md:w-1/4 hidden md:flex ">
                 <img className='' src="https://i.ibb.co.com/vxLJJKZ6/Illustration.png" alt="" />
 
             </div>            {/* <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl"> */}
@@ -105,7 +145,6 @@ const Login = () => {
                             <Link className='text-primary font-semibold'>Forgot password?</Link>
                         </div>
                         <input
-
                             name='password'
                             type={`${show ? 'text' : 'Password'}`}
                             className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300    border-0 focus:outline-primary "
