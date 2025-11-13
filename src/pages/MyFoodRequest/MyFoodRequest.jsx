@@ -7,6 +7,24 @@ const MyFoodRequest = () => {
     const { user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [foods, setFoods] = useState([]);
+    const [refatch, setRefatch] = useState(false)
+
+
+
+    const handleCancel = (_id) => {
+        console.log('cancccel', _id);
+        axiosInstance.delete(`/food-request/${_id}`)
+            .then(res => {
+                console.log(res.data);
+                setLoading(false)
+                setRefatch(prev => !prev)
+            })
+            .catch(error => {
+                console.log(error);
+                setLoading(false)
+            })
+
+    }
 
     useEffect(() => {
         const fetchRequest = async () => {
@@ -38,7 +56,7 @@ const MyFoodRequest = () => {
             }
         };
         fetchRequest();
-    }, [axiosInstance, user]);
+    }, [axiosInstance, user, refatch]);
 
     return (
         <div className="w-full md:w-10/12 mx-auto mt-10 mb-10">
@@ -88,9 +106,10 @@ const MyFoodRequest = () => {
                                 <td>
                                     <div className="md:flex w-full gap-4">
                                         <button
-                                            disabled={reqeuseFood.status === 'Accepted' || false}
-                                            className={`btn btn-outline ${reqeuseFood.status === 'Accepted' ? 'text-gray-400' : 'text-red-400'}`}>
-                                            Remove</button>
+                                            onClick={() => handleCancel(reqeuseFood._id)}
+                                            disabled={reqeuseFood.status === 'Accepted' || reqeuseFood.status === 'Rejected'}
+                                            className={`btn btn-outline ${reqeuseFood.status === 'Accepted' ? 'text-gray-400' : reqeuseFood.status === 'Rejected' ? 'text-gray-400' : 'text-red-400'}`}>
+                                            Cancel</button>
                                         {/* <button
                                             onClick={() =>
                                                 handleAccept(reqeuseFood._id, reqeuseFood.foodId)
