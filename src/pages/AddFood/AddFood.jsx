@@ -61,9 +61,7 @@ const AddFood = () => {
 
                         <label className="">Food Name</label>
                         <input
-                            required
-                            type="text"
-                            name='food_name'
+                           
                             className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300   border-0 focus:outline-primary "
                             placeholder="Add  A Food Name" />
                     </div>

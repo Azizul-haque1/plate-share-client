@@ -65,7 +65,7 @@ const Navbar = () => {
                             }
                         </ul>
                     </div>
-                    <div className="navbar-end">
+                    <div className="navbar-end z-50">
                         <input
                             onChange={(e) => handleTheme(e.target.checked)}
                             type="checkbox"
