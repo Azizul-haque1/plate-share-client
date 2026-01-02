@@ -18,7 +18,6 @@ const FoodCard = ({ food }) => {
         food_status,
         created_at
     } = food || {};
-
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
