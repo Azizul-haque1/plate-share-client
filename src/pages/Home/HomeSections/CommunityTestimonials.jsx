@@ -57,7 +57,7 @@ const CommunityTestimonials = () => {
                             <p className="text-lg text-base-content/80 mb-8 leading-relaxed italic relative z-10">
                                 "{item.text}"
                             </p>
-
+                        
                             <div className="flex items-center gap-4 border-t border-base-200 pt-6">
                                 <div className="avatar">
                                     <div className="w-14 h-14 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">

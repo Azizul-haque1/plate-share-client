@@ -14,7 +14,6 @@ const MainLayout = () => {
                 <Outlet />
                 <Toaster />
             </main>
-
             <footer className='w-full '>
                 <Footer />
             </footer>
