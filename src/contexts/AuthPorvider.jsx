@@ -30,6 +30,12 @@ const AuthPorvider = ({ children }) => {
     }
 
     const updateUser = (displayName, photoURL) => {
+
+        setUser(prev => ({
+            ...prev,
+            displayName,
+            photoURL,
+        }));
         return updateProfile(auth.currentUser, {
             displayName: displayName, photoURL: photoURL
         })

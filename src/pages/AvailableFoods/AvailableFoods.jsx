@@ -2,103 +2,106 @@ import React, { useEffect, useState } from 'react';
 import useAxios from '../../hooks/userAxios';
 import FoodCard from '../../components/FoodCard/FoodCard';
 import Loader from '../../components/Loader/Loader';
-import { motion } from 'framer-motion';
-
-const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1
-        }
-    }
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-};
 
 const AvailableFoods = () => {
     const axiosInstance = useAxios();
+
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState('');
 
+    const [sort, setSort] = useState('');
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
+    // Fetch foods   
     useEffect(() => {
-        axiosInstance('/foods')
-            .then(data => {
-                setLoading(false);
-                setFoods(data.data);
-            })
-            .catch(error => {
-                console.error(error);
-                setLoading(false);
-            });
-    }, [axiosInstance]);
+        setLoading(true);
+        let url = `/foods?status=Available&page=${page}&limit=12`;
+        if (search) url += `&search=${encodeURIComponent(search)}`;
+        // if (location) url += `&location=${encodeURIComponent(location)}`;
+        if (sort) url += `&sort=${sort}`;
 
-    if (loading) {
-        return (
-            <div className="min-h-[60vh] flex items-center justify-center">
-                <Loader />
-            </div>
-        );
-    }
+        axiosInstance(url)
+            .then(res => {
+                console.log(res.data);
+                setFoods(res.data.foods);
+                setTotalPages(res.data.totalPages);
+                setLoading(false);
+            })
+            .catch(() => setLoading(false));
+    }, [search, sort, page, axiosInstance]);
+
+    // Reset page on filter change
+    useEffect(() => {
+        setPage(1);
+    }, [search, sort]);
+
+
 
     return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="min-h-screen bg-base-100 py-12 px-4 sm:px-6 lg:px-8"
-        >
-            <div className="max-w-7xl mx-auto space-y-12">
-                {/* Header Section */}
-                <div className="text-center space-y-4">
-                    <motion.h1
-                        initial={{ y: -20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="text-4xl md:text-5xl font-bold text-secondary tracking-tight"
-                    >
-                        Available <span className="text-primary">Foods</span>
-                    </motion.h1>
-                    <motion.p
-                        initial={{ y: -10, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                        className="text-lg text-base-content/70 max-w-2xl mx-auto"
-                    >
-                        Browse freshly shared meals from our community. Reserve your meal today and help reduce food waste.
-                    </motion.p>
-                    <div className="w-24 h-1.5 bg-primary mx-auto rounded-full opacity-80"></div>
-                </div>
+        <div className="max-w-7xl mx-auto px-4 py-10">
 
-                {/* Grid Section */}
-                {foods.length > 0 ? (
-                    <motion.div
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate="show"
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
-                    >
-                        {foods.map((food) => (
-                            <motion.div key={food._id} variants={itemVariants}>
-                                <FoodCard food={food} />
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                ) : (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="text-center py-20 bg-base-200/50 rounded-3xl"
-                    >
-                        <p className="text-2xl font-semibold text-base-content/60">No food items available at the moment.</p>
-                        <p className="text-base-content/50 mt-2">Check back later for new contributions.</p>
-                    </motion.div>
-                )}
+            <h1 className="text-4xl font-bold text-center mb-8">
+                Available <span className="text-primary">Foods</span>
+            </h1>
+
+            {/* Filters */}
+            <div className="flex flex-col space-y-3 md:justify-between md:flex-row ">
+                <input
+                    className="input text-black input-bordered"
+                    placeholder="Search food..."
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                />
+
+           
+
+                <select
+                    className="select select-bordered"
+                    value={sort}
+                    onChange={e => setSort(e.target.value)}
+                >
+                    <option value="">Expiry Soon</option>
+                    <option value="expire_desc">Expiry Last</option>
+                    <option value="quantity_desc">Highest Quantity</option>
+                </select>
             </div>
-        </motion.div>
+
+            {/* Food grid */}
+      
+
+            {
+                loading ? (<Loader />) : (
+                    
+                        foods.length ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                {foods.map(food => (
+                                    <FoodCard key={food._id} food={food} />
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-center text-xl text-gray-500">No food available</p>
+                        )
+                
+                )
+            }
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div className="flex justify-center gap-2 mt-10">
+                    {[...Array(totalPages).keys()].map(i => (
+                        <button
+                            key={i}
+                            onClick={() => setPage(i + 1)}
+                            className={`btn btn-sm ${page === i + 1 ? 'btn-primary' : ''}`}
+                        >
+                            {i + 1}
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
     );
 };
 

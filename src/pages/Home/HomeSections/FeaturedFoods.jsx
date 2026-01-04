@@ -31,7 +31,7 @@ const FeaturedFoods = () => {
         <div className="py-24 container mx-auto px-4">
             <div className="text-center mb-16 space-y-3">
                 <h2 className="text-4xl md:text-5xl font-bold text-secondary">
-                    Featured <span className="text-primary">Foods</span>
+                    Featured <span className="">Foods</span>
                 </h2>
                 <p className="text-lg text-base-content/60 max-w-2xl mx-auto">
                     Freshly cooked meals and groceries available for pickup right now.

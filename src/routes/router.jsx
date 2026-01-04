@@ -11,6 +11,10 @@ import AddFood from "../pages/AddFood/AddFood";
 import ManageMyFood from "../pages/ManageMyFood/ManageMyFood";
 import MyFoodRequest from "../pages/MyFoodRequest/MyFoodRequest";
 import MyProfile from "../pages/MyProfile/MyProfile";
+import About from "../pages/About/About";
+import Contact from "../pages/Contact/Contact";
+import DashboardLayout from "../layout/DashboardLayout/DashboardLayout";
+import Overview from "../pages/Dashboard/Overview";
 
 const router = createBrowserRouter([
     {
@@ -32,29 +36,25 @@ const router = createBrowserRouter([
 
             },
             {
-                path: '/my-profile',
-                element: <PrivateRouter>
-                    <MyProfile />
-                </PrivateRouter>
+                path: '/about',
+                element: <About />
+
             },
             {
-                path: '/add-food',
+                path: '/contact',
+                element: <Contact />
+
+            },
+
+
+            {
+                path: '/dashboard/add-food',
                 element: <PrivateRouter>
                     <AddFood />
                 </PrivateRouter>
             },
-            {
-                path: '/manage-my-food',
-                element: <PrivateRouter>
-                    <ManageMyFood />
-                </PrivateRouter>
-            },
-            {
-                path: '/my-food-request',
-                element: <PrivateRouter>
-                    <MyFoodRequest />
-                </PrivateRouter>
-            },
+
+
 
             {
                 path: '/auth/login',
@@ -66,6 +66,34 @@ const router = createBrowserRouter([
                 Component: Register
 
             },
+        ]
+    },
+    {
+        path: 'dashboard',
+        element: <PrivateRouter>
+            <DashboardLayout></DashboardLayout>
+        </PrivateRouter>,
+        children: [
+            {
+                index: true,
+                element: <Overview />
+            },
+            {
+                path: 'my-profile',
+                element: <PrivateRouter>
+                    <MyProfile />
+                </PrivateRouter>
+            },
+
+            {
+                path: 'my-food-request',
+                element: <PrivateRouter>
+                    <MyFoodRequest />
+                </PrivateRouter>
+            },
+
+
+
         ]
     },
 

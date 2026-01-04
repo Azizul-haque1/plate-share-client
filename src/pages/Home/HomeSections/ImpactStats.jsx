@@ -25,15 +25,15 @@ const stats = [
 
 const ImpactStats = () => {
     return (
-        <div className="py-24 bg-secondary text-secondary-content relative overflow-hidden">
+        <div className="py-24 text-secondary-content relative overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">Our Impact</h2>
-                    <p className="text-lg text-white/70 max-w-2xl mx-auto">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-4 text-secondary">Our Impact</h2>
+                    <p className="text-lg text-base-content/60 max-w-2xl mx-auto">
                         See the tangible difference we are making together in the fight against hunger and climate change.
                     </p>
                 </div>
@@ -46,7 +46,7 @@ const ImpactStats = () => {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.2, duration: 0.5 }}
-                            className="p-8 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-all duration-300"
+                            className="p-8 rounded-3xl bg-secondary  backdrop-blur-sm border border-white/10 hover:bg-secondary/80 transition-all duration-300"
                         >
                             <div className="inline-flex p-4 rounded-full bg-primary/20 text-primary mb-6">
                                 <stat.icon size={32} />

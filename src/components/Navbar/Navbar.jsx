@@ -4,6 +4,7 @@ import { PiBowlFood } from 'react-icons/pi';
 import { Link, NavLink } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
+import { Contact, Info, LayoutDashboardIcon } from 'lucide-react';
 
 const Navbar = () => {
     const { user, signOutUser } = useAuth()
@@ -28,6 +29,20 @@ const Navbar = () => {
 
         <li>  <NavLink to='/available-foods'> <PiBowlFood />
             Available Foods</NavLink>
+        </li>
+
+        {user &&
+            <li>  <NavLink to='/dashboard'> <LayoutDashboardIcon size={16} />
+                Dashboard</NavLink>
+            </li>
+        }
+        <li>  <NavLink to='/about'>     <Info size={16} />
+
+            About</NavLink>
+        </li>
+        <li>  <NavLink to='/contact'>     <Contact size={16} />
+
+            Contact</NavLink>
         </li>
     </>
 

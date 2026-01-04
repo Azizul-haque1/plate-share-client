@@ -60,9 +60,9 @@ const Hero = () => {
                 >
                     <div className="absolute inset-0 bg-black/50 z-10" />
                     <motion.img
-                        initial={{ scale: 1.1 }}
-                        animate={{ scale: 1 }}
-                        transition={{ duration: 6, ease: "linear" }}
+                        initial={{ scale: 1 }}
+                        animate={{ scale: 1.2 }}
+                        transition={{ duration:4, ease: "easeInOut" }}
                         src={slides[current].image}
                         alt="Hero Background"
                         className="h-full w-full object-cover"

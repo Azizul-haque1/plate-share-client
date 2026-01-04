@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { motion } from 'framer-motion';
-import { MapPin, Users, Calendar, Clock } from 'lucide-react';
+import { MapPin, Users, Calendar, ArrowRight } from 'lucide-react';
 
 const FoodCard = ({ food }) => {
     const {
@@ -11,107 +11,91 @@ const FoodCard = ({ food }) => {
         food_quantity,
         pickup_location,
         expire_date,
-        additional_notes,
         donator_name,
-        donator_email,
         donator_image,
         food_status,
-        created_at
     } = food || {};
+
+    const isAvailable = food_status === 'Available';
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-50px" }}
             whileHover={{ y: -8 }}
-            className="card bg-base-100 w-full shadow-lg hover:shadow-2xl transition-all duration-300 border border-base-200 group/card"
+            transition={{ duration: 0.4, type: "spring", stiffness: 100 }}
+            className="group relative bg-base-100 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 border border-base-200 flex flex-col h-full"
         >
-            <figure className="relative h-56 w-full overflow-hidden">
+            {/* Image Section */}
+            <div className="relative h-60 overflow-hidden">
                 <motion.img
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.6 }}
                     src={food_image}
                     alt={food_name}
                     className="w-full h-full object-cover"
                 />
-                <div className="absolute top-3 right-3 z-10">
-                    <motion.span
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className={`badge ${food_status === 'Available' ? 'badge-success text-white' : 'badge-neutral'} gap-1 shadow-md font-medium border-none`}
+
+                {/* Overlay Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+
+                {/* Status Badge */}
+                <div className="absolute top-4 right-4">
+                    <span
+                        className={`badge border-0 font-bold px-3 py-3 shadow-sm backdrop-blur-md ${isAvailable
+                            ? 'bg-green-500/90 text-white'
+                            : 'bg-neutral/90 text-neutral-content'
+                            }`}
                     >
                         {food_status}
-                    </motion.span>
-                </div>
-                {/* Gradient Overlay on Hover */}
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 pointer-events-none" />
-            </figure>
-
-            <div className="card-body p-5 gap-3">
-                {/* Header & Donator */}
-                <div className="space-y-3">
-                    <h2 className="card-title text-primary text-xl font-bold line-clamp-1" title={food_name}>
-                        {food_name}
-                    </h2>
-
-                    <div className="flex items-center gap-3">
-                        <div className="avatar">
-                            <div className="w-8 h-8 rounded-full ring ring-secondary ring-offset-base-100 ring-offset-1">
-                                <img
-                                    src={donator_image || "https://i.ibb.co.com/NgX6sdH9/images.png"}
-                                    alt={donator_name}
-                                    className="object-cover"
-                                />
-                            </div>
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="text-xs text-base-content/60 font-medium">Donated by</span>
-                            <span className="text-sm font-semibold text-secondary line-clamp-1">{donator_name}</span>
-                        </div>
-                    </div>
+                    </span>
                 </div>
 
-                <div className="divider my-1"></div>
-
-                {/* Details */}
-                <div className="space-y-2.5 text-sm text-base-content/80">
-                    <div className="flex items-center gap-2.5">
-                        <div className="p-1.5 bg-primary/10 rounded-lg text-primary">
-                            <MapPin size={16} />
-                        </div>
-                        <span className="truncate font-medium flex-1">{pickup_location}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2.5">
-                            <div className="p-1.5 bg-secondary/10 rounded-lg text-secondary">
-                                <Users size={16} />
-                            </div>
-                            <span className="font-medium">Serves {food_quantity}</span>
+                {/* Donator Tag (Overlay) */}
+                <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                    <div className="avatar ring-2 ring-white/50 rounded-full">
+                        <div className="w-8 h-8 rounded-full">
+                            <img src={donator_image || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} alt={donator_name} />
                         </div>
                     </div>
+                    <span className="text-white text-sm font-medium drop-shadow-md truncate max-w-[150px]">
+                        {donator_name}
+                    </span>
+                </div>
+            </div>
 
-                    <div className="flex items-center gap-2.5 bg-base-200/50 p-2 rounded-lg border border-base-200">
-                        <Clock size={16} className="text-error" />
-                        <span className="text-xs font-semibold text-base-content/70">Expires:</span>
-                        <span className="text-xs font-bold text-error ml-auto">{expire_date}</span>
+            {/* Content Section */}
+            <div className="p-5 flex flex-col flex-1">
+                <h2 className="text-xl font-bold text-secondary mb-3 line-clamp-1 group-hover:text-primary transition-colors">
+                    {food_name}
+                </h2>
+
+                <div className="space-y-3 mb-6 flex-1">
+                    <div className="flex items-center gap-2 text-base-content/70 text-sm">
+                        <MapPin className="w-4 h-4 text-primary shrink-0" />
+                        <span className="truncate">{pickup_location}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center gap-2 text-base-content/70">
+                            <Users className="w-4 h-4 text-secondary shrink-0" />
+                            <span>Serves {food_quantity}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-base-content/70">
+                            <Calendar className="w-4 h-4 text-warning shrink-0" />
+                            <span>{expire_date}</span>
+                        </div>
                     </div>
                 </div>
 
-                {/* Action */}
-                <div className="card-actions justify-end mt-2">
-                    <Link to={`/foods/${_id}`} className="w-full">
-                        <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="btn btn-primary w-full text-white shadow-primary/20 shadow-lg"
-                        >
-                            View Details
-                        </motion.button>
-                    </Link>
-                </div>
+                {/* Action Button */}
+                <Link to={`/foods/${_id}`} className="mt-auto">
+                    <button className="btn btn-primary w-full rounded-xl text-white group-hover:bg-primary-focus transition-all flex items-center justify-center gap-2">
+                        View Details
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </button>
+                </Link>
             </div>
         </motion.div>
     );

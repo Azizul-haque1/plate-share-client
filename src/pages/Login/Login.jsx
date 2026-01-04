@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
-import { FaEye, FaGoogle } from 'react-icons/fa';
+import { FaGoogle } from 'react-icons/fa';
 import { IoEye, IoEyeOff } from "react-icons/io5";
-
+import { Mail, Lock } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Login = () => {
     const [show, setShow] = useState(false)
     const location = useLocation()
-    
+
     const navigate = useNavigate()
     const { sigInWithGoolge, setUser, user, setLoading,
         signWithEmailAndPasswordFunc
@@ -117,58 +118,133 @@ const Login = () => {
 
 
     return (
-        <div className=' px-2 md:px-0 md:w-10/12 mx-auto flex flex-col items-center md:flex-row gap-20 justify-center pt-20 pb-40 md:py-20 '>
-            <div
+        <div className='min-h-screen flex items-center justify-center py-20 px-4 bg-base-100'>
+            <div className='w-full max-w-5xl bg-base-100 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-base-200'>
 
-                className="md:w-1/4 hidden md:flex ">
-                <img className='' src="https://i.ibb.co.com/vxLJJKZ6/Illustration.png" alt="" />
-
-            </div>            {/* <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl"> */}
-            <div className=" shadow-xl   w-full  md:w-1/2 lg:w-1/3 border border-secondary/40  md:p-10 p-2 rounded-xl md:border-gray-300 ">
-                <h1 className='text-center text-xl my-10 text-gray-500'>Welcome back! Sign in to continue</h1>
-
-                <form onSubmit={handleLogin} className="fieldset gap-4">
-                    {/* email */}
-                    <div className="" >
-
-                        <label className="">Email</label>
-                        <input
-                            name='email'
-                            type="email"
-                            className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300   border-0 focus:outline-primary "
-                            placeholder="Email" />
+                {/* Visual Side */}
+                <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="md:w-1/2 bg-secondary p-12 text-white flex flex-col justify-between relative overflow-hidden"
+                >
+                    <div className="relative z-10">
+                        <Link to="/" className="text-2xl font-bold tracking-tighter mb-8 block">Plate Share.</Link>
+                        <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
+                            Welcome Back!
+                        </h2>
+                        <p className="text-lg text-white/80 max-w-sm">
+                            Sign in to continue sharing food and spreading hope in your community.
+                        </p>
                     </div>
 
-                    <div className=" relative">
-                        <div className="flex justify-between">
-                            <label className="">Password</label>
-                            <Link className='text-primary font-semibold'>Forgot password?</Link>
+                    <div className="relative z-10 mt-12 md:mt-0">
+                        <div className="flex -space-x-4">
+                            {[1, 2, 3, 4].map((i) => (
+                                <div key={i} className="w-12 h-12 rounded-full border-2 border-secondary bg-white/20 backdrop-blur-sm flex items-center justify-center text-xs font-bold">
+                                    <img src={`https://i.pravatar.cc/100?img=${10 + i}`} alt="user" className="w-full h-full rounded-full opacity-80" />
+                                </div>
+                            ))}
+                            <div className="w-12 h-12 rounded-full border-2 border-secondary bg-white text-secondary flex items-center justify-center text-xs font-bold z-10">
+                                +2k
+                            </div>
                         </div>
-                        <input
-                            name='password'
-                            type={`${show ? 'text' : 'Password'}`}
-                            className="input w-full mt-2 bg-gray-100 placeholder:text-gray-300    border-0 focus:outline-primary "
-                            placeholder="Password" />
-                        <span onClick={() => setShow(!show)} className=' absolute  bottom-4 x z-10 right-2'>{show ? <IoEye /> : <IoEyeOff />
-                        }
-
-                        </span>
+                        <p className="mt-4 text-sm text-white/60">Join thousands of active donors today.</p>
                     </div>
-                    <button className="btn btn-primary mt-4">Login</button>
-                </form>
-                <div className="divider text-sm text-gray-500">Or continue with
-                </div>
-                {/* Google */}
-                <button onClick={handelLoginWithGoogle} className="btn bg-white text-primary  w-full   border-primary">
-                    <FaGoogle />
 
-                    Login with Google
-                </button>
-                <p className='text-sm my-4 text-center text-gray-500'>Don’t have an account yet? <Link to='/auth/register' className='text-primary font-semibold'>Register</Link> </p>
+                    {/* Decorative Background */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -ml-16 -mb-16 pointer-events-none"></div>
+                </motion.div>
 
-                {/* </div> */}
-            </div >
-        </div >
+                {/* Form Side */}
+                <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center"
+                >
+                    <div className="w-full max-w-md mx-auto space-y-8">
+                        <div>
+                            <h1 className='text-3xl font-bold text-secondary mb-2'>Sign In</h1>
+                            <p className='text-base-content/60'>Enter your details to access your account</p>
+                        </div>
+
+                        <form onSubmit={handleLogin} className="space-y-6">
+                            {/* Email */}
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text font-semibold">Email Address</span>
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/40">
+                                        <Mail size={20} />
+                                    </div>
+                                    <input
+                                        name='email'
+                                        type="email"
+                                        required
+                                        className="input input-bordered w-full pl-10 focus:input-primary bg-base-200/50 transition-all border-transparent focus:border-primary focus:bg-base-100"
+                                        placeholder="hello@example.com"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Password */}
+                            <div className="form-control">
+                                <div className="label">
+                                    <span className="label-text font-semibold">Password</span>
+                                </div>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/40">
+                                        <Lock size={20} />
+                                    </div>
+                                    <input
+                                        name='password'
+                                        required
+                                        type={show ? 'text' : 'password'}
+                                        className="input input-bordered w-full pl-10 pr-12 focus:input-primary bg-base-200/50 transition-all border-transparent focus:border-primary focus:bg-base-100"
+                                        placeholder="••••••••"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShow(!show)}
+                                        className='absolute inset-y-0 right-0 pr-3 flex items-center text-base-content/40 hover:text-primary transition-colors cursor-pointer'
+                                    >
+                                        {show ? <IoEye size={20} /> : <IoEyeOff size={20} />}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button className="btn btn-primary w-full text-white text-lg shadow-lg hover:shadow-primary/30 rounded-xl">
+                                Sign In
+                            </button>
+                        </form>
+
+                        <div className="relative py-2">
+                            <div className="absolute inset-0 flex items-center">
+                                <div className="w-full border-t border-base-content/10"></div>
+                            </div>
+                            <div className="relative flex justify-center text-sm">
+                                <span className="px-4 bg-base-100 text-base-content/50">Or continue with</span>
+                            </div>
+                        </div>
+
+                        <button
+                            onClick={handelLoginWithGoogle}
+                            className="btn btn-outline border-base-200 hover:border-base-300 hover:bg-base-50 text-base-content w-full gap-3 rounded-xl normal-case font-medium h-12"
+                        >
+                            <FaGoogle className="text-red-500 text-lg" />
+                            Google
+                        </button>
+
+                        <p className='text-center text-base-content/60'>
+                            Don’t have an account? <Link to='/auth/register' className='text-primary font-bold hover:underline'>Register Now</Link>
+                        </p>
+                    </div>
+                </motion.div>
+            </div>
+        </div>
     );
 };
 
